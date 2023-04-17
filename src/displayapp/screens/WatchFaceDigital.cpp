@@ -37,7 +37,7 @@ WatchFaceDigital::WatchFaceDigital(Controllers::DateTime& dateTimeController,
 
   label_date = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_align(label_date, lv_scr_act(), LV_ALIGN_CENTER, 0, 60);
-  lv_obj_set_style_local_text_color(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x999999));
+  lv_obj_set_style_local_text_color(label_date, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xFFFFFF));
 
   label_time = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(label_time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_extrabold_compressed);
@@ -50,21 +50,21 @@ WatchFaceDigital::WatchFaceDigital(Controllers::DateTime& dateTimeController,
 
   heartbeatIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_text_static(heartbeatIcon, Symbols::heartBeat);
-  lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+  lv_obj_set_style_local_text_color(heartbeatIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xF38BA8));
   lv_obj_align(heartbeatIcon, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
 
   heartbeatValue = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
+  lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xF38BA8));
   lv_label_set_text_static(heartbeatValue, "");
   lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_RIGHT_MID, 5, 0);
 
   stepValue = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_color(stepValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x00FFE7));
+  lv_obj_set_style_local_text_color(stepValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x89B4FA));
   lv_label_set_text_static(stepValue, "0");
   lv_obj_align(stepValue, lv_scr_act(), LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0);
 
   stepIcon = lv_label_create(lv_scr_act(), nullptr);
-  lv_obj_set_style_local_text_color(stepIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x00FFE7));
+  lv_obj_set_style_local_text_color(stepIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x89B4FA));
   lv_label_set_text_static(stepIcon, Symbols::shoe);
   lv_obj_align(stepIcon, stepValue, LV_ALIGN_OUT_LEFT_MID, -5, 0);
 
@@ -85,11 +85,12 @@ void WatchFaceDigital::Refresh() {
     lv_label_set_text_static(notificationIcon, NotificationIcon::GetIcon(notificationState.Get()));
   }
 
-  currentDateTime = std::chrono::time_point_cast<std::chrono::minutes>(dateTimeController.CurrentDateTime());
+  currentDateTime = std::chrono::time_point_cast<std::chrono::seconds>(dateTimeController.CurrentDateTime());
 
   if (currentDateTime.IsUpdated()) {
     uint8_t hour = dateTimeController.Hours();
     uint8_t minute = dateTimeController.Minutes();
+    uint8_t second = dateTimeController.Seconds();
 
     if (settingsController.GetClockType() == Controllers::Settings::ClockType::H12) {
       char ampmChar[3] = "AM";
@@ -102,10 +103,10 @@ void WatchFaceDigital::Refresh() {
         ampmChar[0] = 'P';
       }
       lv_label_set_text(label_time_ampm, ampmChar);
-      lv_label_set_text_fmt(label_time, "%2d:%02d", hour, minute);
+      lv_label_set_text_fmt(label_time, "%2d:%02d:%02d", hour, minute, second);
       lv_obj_align(label_time, lv_scr_act(), LV_ALIGN_IN_RIGHT_MID, 0, 0);
     } else {
-      lv_label_set_text_fmt(label_time, "%02d:%02d", hour, minute);
+      lv_label_set_text_fmt(label_time, "%02d:%02d:%02d", hour, minute, second);
       lv_obj_align(label_time, lv_scr_act(), LV_ALIGN_CENTER, 0, 0);
     }
 

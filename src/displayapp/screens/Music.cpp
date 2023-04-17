@@ -52,7 +52,7 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
 
   lv_style_init(&btn_style);
   lv_style_set_radius(&btn_style, LV_STATE_DEFAULT, 20);
-  lv_style_set_bg_color(&btn_style, LV_STATE_DEFAULT, LV_COLOR_AQUA);
+  lv_style_set_bg_color(&btn_style, LV_STATE_DEFAULT, lv_color_hex(0x6c7086));
   lv_style_set_bg_opa(&btn_style, LV_STATE_DEFAULT, LV_OPA_50);
 
   btnVolDown = lv_btn_create(lv_scr_act(), nullptr);
@@ -268,14 +268,14 @@ bool Music::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
       }
       return false;
     }
-    case TouchEvents::SwipeLeft: {
-      musicService.event(Controllers::MusicService::EVENT_MUSIC_NEXT);
-      return true;
-    }
-    case TouchEvents::SwipeRight: {
-      musicService.event(Controllers::MusicService::EVENT_MUSIC_PREV);
-      return true;
-    }
+    //case TouchEvents::SwipeLeft: {
+    //  musicService.event(Controllers::MusicService::EVENT_MUSIC_NEXT);
+    //  return true;
+    //}
+    //case TouchEvents::SwipeRight: {
+    //  musicService.event(Controllers::MusicService::EVENT_MUSIC_PREV);
+    //  return true;
+    //}
     default: {
       return false;
     }
