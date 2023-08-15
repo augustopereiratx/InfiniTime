@@ -27,6 +27,7 @@
 #include "displayapp/screens/FlashLight.h"
 #include "displayapp/screens/BatteryInfo.h"
 #include "displayapp/screens/Steps.h"
+#include "displayapp/screens/Dice.h"
 #include "displayapp/screens/PassKey.h"
 #include "displayapp/screens/Error.h"
 #include "displayapp/screens/Weather.h"
@@ -550,6 +551,9 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
     */
     case Apps::Steps:
       currentScreen = std::make_unique<Screens::Steps>(motionController, settingsController);
+      break;
+    case Apps::Dice:
+      currentScreen = std::make_unique<Screens::Dice>(motionController, motorController);
       break;
   }
   currentApp = app;
